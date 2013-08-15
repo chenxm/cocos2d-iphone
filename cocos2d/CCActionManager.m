@@ -59,7 +59,6 @@
 
 	[self removeAllActions];
 
-	[super dealloc];
 }
 
 #pragma mark ActionManager - Private
@@ -168,7 +167,7 @@
 		element = calloc( sizeof( *element ), 1 );
 		element->paused = paused;
         void* et = (__bridge void*) element->target;
-        CFRetain(et);
+        if (et) CFRetain(et);
 		HASH_ADD_INT(targets, target, element);
 //		CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
 

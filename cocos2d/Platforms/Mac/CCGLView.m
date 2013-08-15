@@ -78,7 +78,7 @@
 	if (!pixelFormat)
 		CCLOG(@"No OpenGL pixel format");
 
-	if( (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) ) {
+	if( (self = [super initWithFrame:frameRect pixelFormat:pixelFormat]) ) {
 
 		if( context )
 			[self setOpenGLContext:context];
@@ -164,22 +164,17 @@
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[super dealloc];
 }
 
 #define DISPATCH_EVENT(__event__, __selector__)												\
 	id obj = _eventDelegate;																\
-	CCEventObject *event = [[CCEventObject alloc] init];									\
-    void* e = (__bridge void*) __event__;                                                   \
-    CFRetain(e);                                                                            \
-	event->event = (__bridge NSEvent*)e;               														\
-	event->selector = __selector__;															\
+	CCEventObject *eventObj = [[CCEventObject alloc] init];                                 \
+	eventObj->event = __event__;               												\
+	eventObj->selector = __selector__;														\
 	[obj performSelector:@selector(dispatchEvent:)											\
 			onThread:[[CCDirector sharedDirector] runningThread]							\
-		  withObject:event																	\
-	   waitUntilDone:NO];																	\
-	void* e2 = (__bridge void*)event;                                                       \
-    CFRelease(e2);
+		  withObject:eventObj																\
+	   waitUntilDone:NO];
 
 #pragma mark CCGLView - Mouse events
 
