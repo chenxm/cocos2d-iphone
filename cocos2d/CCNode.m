@@ -177,8 +177,8 @@ static NSUInteger globalOrderOfArrival = 1;
 
 
 	// children
-    for (CCNode* child in _children)
-		child.parent = nil;
+    //for (CCNode* child in _children)
+	//	child.parent = nil;
 
 
 }
